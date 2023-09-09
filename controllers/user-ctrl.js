@@ -49,9 +49,37 @@ const createUser = async (req,res) => {
         
 }
 
-const updateUser= async (req , res) =>{
-    //todo
+const updateUser= async (req, res) => {
+        try {
+          const userId = req.params.id;
+          const userData = req.body;
+      
+          
+          const validationResult = validateUserUpdate(userData);
+      
+          if (validationResult.error) {
+            
+            return res.status(400).json({ error: validationResult.error.details[0].message });
+          }
+      
+          // Find the user by ID and update their data
+          const updatedUser = await User.findByIdAndUpdate(userId, userData, { new: true });
+      
+          if (!updatedUser) {
+            // If the user with the given ID doesn't exist, return a 404 Not Found response
+            return res.status(404).json({ error: 'User not found' });
+          }
+      
+          
+          res.status(200).json(updatedUser);
+        } catch (error) {
+        
+          console.error(error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        
+        }
 }
+
 
 const deleteUser= async (req , res) =>{
     //todo
