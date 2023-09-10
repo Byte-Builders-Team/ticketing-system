@@ -1,14 +1,9 @@
-const User = require('../models/user-models.js');
+const User = require("../models/user-model");
 const validator = require('../utils/validator.js')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv')
 dotenv.config()
-
-
-const loginUser = async (req , res) =>{
-    //todo
-}
 
 const createUser = async (req,res) => {
 
@@ -62,10 +57,11 @@ const getUserbyId= async (req , res) =>{
 }
 
 const getUsers= async (req , res) =>{
+    return res.status(200).json("getUsers");
     //todo
 }
 
 
 
 //export methods ... 
-module.exports = { createUser , updateUser , deleteUser , getUserbyId , getUsers, loginUser }
+module.exports = { createUser , updateUser , deleteUser , getUserbyId , getUsers }
