@@ -1,13 +1,17 @@
-const express = require('express')
-const  middleware = require('../middleware/authorization')
-const UserCtrl = require('../controllers/user-ctrl.js')
-const router = express.Router()
+const express = require("express");
+const middleware = require("../middleware/authorization");
+const UserCtrl = require("../controllers/user-ctrl.js");
+const Auth = require("../auth/auth-controller");
+const router = express.Router();
 
-router.post('/user', middleware.verifyTokenAndAdmin  , UserCtrl.createUser);
-router.put('/user/:id', middleware.verifyTokenAndAdmin ,UserCtrl.updateUser);
-router.delete('/user/:id', middleware.verifyTokenAndAdmin  , UserCtrl.deleteUser);
-router.get('/user/:id', middleware.verifyTokenAndAdmin , UserCtrl.getUserbyId);
-router.get('/user', middleware.verifyTokenAndAdmin , UserCtrl.getUsers);
-router.post('/login',UserCtrl.loginUser);
+// Register & Login
+router.post("/login", middleware.verifyTokenAndAdmin, Auth.login);
+router.post("/register", Auth.register);
 
-module.exports = router
+router.post("/user", middleware.verifyTokenAndAdmin, UserCtrl.createUser);
+router.put("/user/:id", middleware.verifyTokenAndAdmin, UserCtrl.updateUser);
+router.delete("/user/:id", middleware.verifyTokenAndAdmin, UserCtrl.deleteUser);
+router.get("/user/:id", middleware.verifyTokenAndAdmin, UserCtrl.getUserbyId);
+router.get("/user", middleware.verifyTokenAndAdmin, UserCtrl.getUsers);
+
+module.exports = router;
