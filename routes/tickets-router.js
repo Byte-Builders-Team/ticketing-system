@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const ticketCtrl = require('../controllers/ticket-ctrl');
-const middleware = require('../middleware/authorization'); 
+const ticketCtrl = require('../controllers/tickets');
 
-router.post('/tickets', middleware.verifyTokenAndAdmin, ticketCtrl.createTicket);
-router.get('/tickets', middleware.verifyTokenAndAdmin, ticketCtrl.getAllTickets);
-router.get('/tickets/:id', middleware.verifyTokenAndAdmin, ticketCtrl.getTicketById);
-router.put('/tickets/:id', middleware.verifyTokenAndAdmin, ticketCtrl.updateTicketById);
-router.delete('/tickets/:id', middleware.verifyTokenAndAdmin, ticketCtrl.deleteTicketById);
+router.post('/tickets', ticketCtrl.createTicket);
+router.put('/tickets/:id', ticketCtrl.updateTicket);
+router.put('/tickets/pickup/:id', ticketCtrl.pickUpTicket);
+router.put('/tickets/pickdown/:id', ticketCtrl.pickDownTicket);
+router.delete('/tickets/:id', ticketCtrl.deleteTicket);
+router.get('/tickets', ticketCtrl.readTickets);
+router.get('/tickets/:id', ticketCtrl.readTicketById);
 
 module.exports = router;
