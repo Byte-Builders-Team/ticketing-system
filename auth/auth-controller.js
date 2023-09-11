@@ -9,13 +9,16 @@ dotEnv.config();
 
 const login = async (req, res) => {
   const body = req.body;
+  
 
   // Check if the login request body is valid using a custom validator function.
   if (!validator.isLoginBodyValid(body)) {
+   
     // If the body is invalid, send a 400 Bad Request response with an error message.
     return res.status(400).json({ error: "Invalid user credentials." });
   }
 
+  
   try {
     const user = await User.findOne({ email: body.email });
     if (!user) {
