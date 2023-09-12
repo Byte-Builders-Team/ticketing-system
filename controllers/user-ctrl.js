@@ -98,6 +98,7 @@ const deleteUser = async (req, res) => {
     }
 };
 
+
 const getUserbyId = async (req, res) => {
     try {
         //get user from DB.
