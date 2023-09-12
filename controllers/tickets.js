@@ -28,13 +28,31 @@ const deleteTicket = async (req, res) => {
 
 // Get a list of all tickets
 const readTickets = async (req, res) => {
-        //todo
-}
+                try {
+                  const tickets = await Ticket.find();
+                  res.status(200).json(tickets);
+                } catch (error) {
+                  res.status(500).json({ error: 'An error occurred while fetching tickets' });
+                }
+              };
 
 // Get a ticket by ID
 const readTicketById = async (req, res) => {
-        //todo
-}
+                const  id  = req.params;
+              
+                try {
+                  const ticket = await Ticket.findById(id);
+              
+                  if (!ticket) {
+                    return res.status(404).json({ error: 'Ticket not found' });
+                  }
+              
+                  res.status(200).json(ticket);
+                } catch (error) {
+                  res.status(500).json({ error: 'An error occurred while fetching the ticket' });
+                }
+              };
+
 
 module.exports = {
   createTicket,
