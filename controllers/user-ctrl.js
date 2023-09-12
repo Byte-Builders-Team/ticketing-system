@@ -10,7 +10,9 @@ dotenv.config()
 const createUser = async (req, res) => {
     //check if body valid 
     const body = req.body
-    if (!validator.isBodyValid(body)) {
+    const requiredFields = ["username", "email", "display_name", "password", "is_admin", "phone_number"];
+    if (!validator.isBodyValid(body, requiredFields)) {
+        
         return res.status(400).json({ success: false, error: 'You must provide a User Info!' });
     }
 
@@ -24,7 +26,7 @@ const createUser = async (req, res) => {
 
     //hash user password 
     try {
-        user.password = await bcrypt.hash(user.password, 10);
+        user.password = await bcrypt.hash(user.password, +process.env.SALTROUNDS);
     } catch (err) {
         return res.status(400).json({ success: false, error: 'Issue with hashing the password please make sure to provided all info' + err.message })
     }
@@ -48,15 +50,20 @@ const updateUser = async (req, res) => {
 
     const userId = req.params.id;
     const body = req.body;
+    const requiredFields = ["username", "email", "display_name", "password", "is_admin"];
 
 
-    if (!validator.isBodyValid(body)) {
+
+    if (!validator.isBodyValid(body, requiredFields)) {
 
         return res.status(400).json({ error: "no the body" });
     }
-
+    try{
     // Find the user by ID and update their data
     const updatedUser = await User.findByIdAndUpdate(userId, body);
+    }catch(err){
+        return res.status(400).json({ error: "User does not found" });
+    };
 
     if (!updatedUser) {
         // If the user with the given ID doesn't exist, return a 404 Not Found response
@@ -66,7 +73,6 @@ const updateUser = async (req, res) => {
     updatedUser.save().then(() => {
         return res.status(201).json({
             success: true,
-            updatedUser,
             message: 'User Updated!',
         });
 
@@ -76,31 +82,53 @@ const updateUser = async (req, res) => {
 
 }
 
-const deleteUser= async (req , res) =>{
-        try {
-            const { id } = req.params;
-    
-            const deletedUser = await User.findOneAndRemove({ _id: id });
-    
-            if (!deletedUser) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-    
-            res.json({ message: 'User deleted successfully' });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedUser = await User.findOneAndRemove({ _id: id });
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: 'User not found' });
         }
-    };
-    
+
+        res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 
 const getUserbyId = async (req, res) => {
-    //todo
+    try {
+        //get user from DB.
+        const user = await User.findById(req.params.id)
+
+        if (!user) {
+            return res.status(400).json({ success: false, error: 'User does not exist!', })
+        } else {
+            return res.status(201).json({ user })
+        }
+
+    } catch (err) {
+        return res.status(400).json({ err, message: 'Can not get user from DB!', })
+    }
 }
 
 
 const getUsers = async (req, res) => {
-    //todo
+    //get list of user from DB 
+    try{
+        const users = await User.find();
+        if (!users) {
+            return res.status(400).json({ success: false, error: 'No users', })
+        }
+
+        return res.status(201).json({ users })
+
+    }catch(err){
+        return res.status(500).json({ success: false, error: err.message })
+    }
 }
 
 

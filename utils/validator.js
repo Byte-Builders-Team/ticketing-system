@@ -37,15 +37,24 @@ const isRegisterBodyValid = (body) => {
 
 function isLoginBodyValid(req) {
   // Check if the request body exists and has the required fields
+  
   if (!req || !req.email || !req.password) {
     return false;
   }
   return true;
 }
 
-const isBodyValid = (body) => {
-  if (!body) return false;
-  else return true;
+const isBodyValid = (body, requiredFields) => {
+  //check if requiredFields is exist 
+  
+  for (const field of requiredFields) {
+
+    if (!body[field]) {
+      return false;
+    }
+  }
+  return true
+
 };
 
 module.exports = { isBodyValid, isLoginBodyValid, isRegisterBodyValid };
