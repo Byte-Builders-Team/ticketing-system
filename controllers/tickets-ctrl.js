@@ -2,8 +2,15 @@ const Ticket = require("../models/tickets-model");
 
 // Create a new ticket
 const createTicket = async (req, res) => {
-  //todo
+  try {
+    const newTicket = await database.insertTicket(req.body);
+    res.json({ message: 'Ticket created', ticket: newTicket });
+  } catch (error) {
+    console.error('Error creating ticket:', error);
+    res.json({ message: 'Ticket creation failed' });
+  }
 };
+
 
 // Update a ticket by ID
 const updateTicket = async (req, res) => {

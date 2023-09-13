@@ -61,10 +61,7 @@ const updateUser = async (req, res) => {
     try{
     // Find the user by ID and update their data
     const updatedUser = await User.findByIdAndUpdate(userId, body);
-    }catch(err){
-        return res.status(400).json({ error: "User does not found" });
-    };
-
+    
     if (!updatedUser) {
         // If the user with the given ID doesn't exist, return a 404 Not Found response
         return res.status(404).json({ error: 'User not found' });
@@ -79,6 +76,9 @@ const updateUser = async (req, res) => {
     }).catch(err => {
         return res.status(400).json({ err, message: 'User does not Updated!' })
     });
+}catch(err){
+    return res.status(400).json({ error: "User does not found" });
+};
 
 }
 
