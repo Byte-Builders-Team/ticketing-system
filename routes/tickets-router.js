@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ticketCtrl = require('../controllers/tickets');
+const ticketCtrl = require('../controllers/tickets-ctrl');
 
 router.post('/tickets', ticketCtrl.createTicket);
 router.put('/tickets/:id', ticketCtrl.updateTicket);
