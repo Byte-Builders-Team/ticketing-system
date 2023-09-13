@@ -17,6 +17,10 @@ const updateTicket = async (req, res) => {
   //todo
 };
 
+const updateTicketStatus = async (req, res) => {
+  //todo
+};
+
 // Pick up a ticket by ID
 const pickUpTicket = async (req, res) => {
   //todo
@@ -69,4 +73,5 @@ module.exports = {
   deleteTicket,
   readTickets,
   readTicketById,
+  updateTicketStatus
 };
