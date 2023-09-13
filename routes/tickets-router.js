@@ -4,6 +4,7 @@ const ticketCtrl = require('../controllers/tickets-ctrl');
 
 router.post('/tickets', ticketCtrl.createTicket);
 router.put('/tickets/:id', ticketCtrl.updateTicket);
+router.put('/ticketsStatus/:id', ticketCtrl.updateTicketStatus);
 router.put('/tickets/pickup/:id', ticketCtrl.pickUpTicket);
 router.put('/tickets/pickdown/:id', ticketCtrl.pickDownTicket);
 router.delete('/tickets/:id', ticketCtrl.deleteTicket);
