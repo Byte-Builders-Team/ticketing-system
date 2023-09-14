@@ -12,6 +12,4 @@ const TicketSchema = new mongoose.Schema({
   category: { type: mongoose.Schema.Types.ObjectId, ref: Category, required: true},
 });
 
-const Ticket = mongoose.model('Ticket', TicketSchema);
-
-module.exports = Ticket;
+module.exports =  mongoose.model('Ticket', TicketSchema);
