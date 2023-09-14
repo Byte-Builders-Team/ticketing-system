@@ -130,7 +130,26 @@ const pickUpTicket = async (req, res) => {
 
 // Pick down a ticket by ID
 const pickDownTicket = async (req, res) => {
-  //todo
+
+  try{
+    const ticket = await Ticket.findByIdAndUpdate(req.params.id, { "Assign_to": null });  
+    
+    return res.status(201).json({
+      success: true,
+      message: "Ticket picked down!",
+    });
+    
+  }catch(err){
+
+    return res.status(400).json({
+      success: false,
+      error: "Invalid Ticket Info provided. Please ensure it is correct.",
+    });
+
+
+  }
+
+
 };
 
 // Delete a ticket by ID
