@@ -14,8 +14,35 @@ const createTicket = async (req, res) => {
 
 // Update a ticket by ID
 const updateTicket = async (req, res) => {
-  //todo
-};
+
+  const ticketId = req.params.id;
+  const { status } = req.body;
+
+  const validationResult = validateTicketStatusUpdate({ status });
+
+  if (validationResult.error) {
+
+    return res.status(400).json({ error: validationResult.error.details[0].message });
+  }
+  const updatedTicket = await Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
+
+  if (!updatedTicket) {
+
+    return res.status(404).json({ error: 'Ticket not found' });
+  }
+
+
+  updatedticket.save().then(() => {
+    return res.status(201).json({
+      success: true,
+      updatedticket,
+      message: 'ticket Updated!',
+    });
+
+  }).catch(err => {
+    return res.status(400).json({ err, message: 'ticket does not Updated!' })
+  });
+}
 
 const updateTicketStatus = async (req, res) => {
   //todo
