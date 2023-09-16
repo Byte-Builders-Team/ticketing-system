@@ -148,7 +148,7 @@ const updateTicketStatus = async (req, res) => {
   }).catch(err => {
     return res.status(400).json({ err, message: 'ticket does not Updated!' })
   });
-}};
+};
 
 // Pick up a ticket by ID
 const pickUpTicket = async (req, res) => {
@@ -160,7 +160,7 @@ const pickDownTicket = async (req, res) => {
 
   try{
     const ticket = await Ticket.findByIdAndUpdate(req.params.id, { "Assign_to": null });  
-    
+    console.log("here");
     return res.status(201).json({
       success: true,
       message: "Ticket picked down!",
