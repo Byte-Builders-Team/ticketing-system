@@ -30,8 +30,11 @@ const login = async (req, res) => {
     if (data) {
       const token = jwt.sign(
         {
+          user_id: user._id,
+          username: user.username,
+          is_admin: user.is_admin,
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
-          data: data,
+          data: data
         },
         process.env.SECRET_KEY
       );

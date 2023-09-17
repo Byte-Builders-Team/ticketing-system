@@ -148,7 +148,7 @@ const updateTicketStatus = async (req, res) => {
   }).catch(err => {
     return res.status(400).json({ err, message: 'ticket does not Updated!' })
   });
-}};
+};
 
 // Pick up a ticket by ID
 const pickUpTicket = async (req, res) => {
