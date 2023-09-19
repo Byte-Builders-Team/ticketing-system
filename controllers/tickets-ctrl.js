@@ -152,8 +152,23 @@ const updateTicketStatus = async (req, res) => {
 
 // Pick up a ticket by ID
 const pickUpTicket = async (req, res) => {
-  //todo
-};
+  try {
+    const { id } = req.params;
+
+    const updatedTicket = await Ticket.findByIdAndUpdate(
+      id,
+      { picked_up: true },
+      { new: true }
+    );
+
+    if (!updatedTicket) {
+      return res.status(404).json({ error: 'Ticket not found' });
+    }
+
+    res.status(200).json({ message: 'Ticket picked up successfully', ticket: updatedTicket });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while picking up the ticket' });
+  }};
 
 // Pick down a ticket by ID
 const pickDownTicket = async (req, res) => {
