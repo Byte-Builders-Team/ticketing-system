@@ -5,7 +5,7 @@ const Auth = require("../auth/auth-controller");
 const router = express.Router();
 
 // Register & Login
-router.post("/login", middleware.verifyTokenAndAdmin, Auth.login);
+router.post("/login",  Auth.login);
 router.post("/register", Auth.register);
 
 router.post("/user", middleware.verifyTokenAndAdmin, UserCtrl.createUser);
