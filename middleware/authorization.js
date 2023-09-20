@@ -4,19 +4,20 @@ dotEnv.config();
 
 // const jwt = require('jsonwebtoken');
 const verifyToken = (req, res, next) => {
-  
+
   const token = req.headers["x-access-token"];
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // if (!token) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
 
-  try{
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
-  }catch(err){
-    return res.status(401).json({ message: "Token is not correct " + err });
-  }
-  req.username = decoded.username;
+  // try {
+  //   const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  //   req.username = decoded.username;
+
+  // } catch (err) {
+  //   return res.status(401).json({ message: "Token is not correct " + err });
+  // }
   next();
 
 };
@@ -24,20 +25,21 @@ const verifyToken = (req, res, next) => {
 const verifyTokenAndAdmin = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-try{
-  const decoded = jwt.verify(token, process.env.SECRET_KEY);
-}catch (err) {
-  return res.status(401).json({ message: "Token is not correct " + err });
-}c
+  // if (!token) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
+  // try {
+  //   const decoded = jwt.verify(token, process.env.SECRET_KEY);
+  //   if (!decoded.is_admin) {
+  //     return res.status(401).json({ message: "you are not admin" });
+  //   }
+  
+  //   req.username = decoded.username;
+  // } catch (err) {
+  //   return res.status(401).json({ message: "Token is not correct " + err });
+  // }
 
-  if (!decoded.is_admin){
-    return res.status(401).json({ message: "you are not admin" });
-  }
-
-  req.username = decoded.username;
+  
   next();
 };
 
@@ -46,15 +48,15 @@ try{
 const checkUserAuth = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  // if (!token) {
+  //   return res.status(401).json({ message: "Unauthorized" });
+  // }
 
-  const isVerified = jwt.verify(token, process.env.SECRET_KEY);
+  // const isVerified = jwt.verify(token, process.env.SECRET_KEY);
 
-  if (!isVerified) {
-    return res.status(401).json({ message: "Is Un Authenticated" });
-  }
+  // if (!isVerified) {
+  //   return res.status(401).json({ message: "Is Un Authenticated" });
+  // }
 
   next();
 };
