@@ -124,12 +124,12 @@ const updateTicketStatus = async (req, res) => {
   const ticketId = req.params.id;
   const { status } = req.body;
 
-  const validationResult = validateTicketStatusUpdate({ status });
+ // const validationResult = validateTicketStatusUpdate({ status });
 
-  if (validationResult.error) {
+  // if (validationResult.error) {
 
-    return res.status(400).json({ error: validationResult.error.details[0].message });
-  }
+  //   return res.status(400).json({ error: validationResult.error.details[0].message });
+  // }
   const updatedTicket = await Ticket.findByIdAndUpdate(ticketId, { status }, { new: true });
 
   if (!updatedTicket) {
@@ -152,26 +152,44 @@ const updateTicketStatus = async (req, res) => {
 
 // Pick up a ticket by ID
 const pickUpTicket = async (req, res) => {
-  try {
-    const { id } = req.params;
+  const { user_id } = req.body;
 
-    const updatedTicket = await Ticket.findByIdAndUpdate(
-      id,
-      { picked_up: true },
-      { new: true }
-    );
+  try{
+    const ticket = await Ticket.findByIdAndUpdate(req.params.id, { "Assign_to": user_id });  
+    
+    return res.status(201).json({
+      success: true,
+      message: "Ticket picked up!",
+    });
+    
+  }catch(err){
 
-    if (!updatedTicket) {
-      return res.status(404).json({ error: 'Ticket not found' });
-    }
+    return res.status(400).json({
+      success: false,
+      error: "Invalid Ticket Info provided. Please ensure it is correct.",
+    });
+  }
+  // try {
+  //   const { id } = req.params;
 
-    res.status(200).json({ message: 'Ticket picked up successfully', ticket: updatedTicket });
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred while picking up the ticket' });
-  }};
+  //   const updatedTicket = await Ticket.findByIdAndUpdate(
+  //     id,
+  //     { picked_up: true },
+  //     { new: true }
+  //   );
+
+  //   if (!updatedTicket) {
+  //     return res.status(404).json({ error: 'Ticket not found' });
+  //   }
+
+  //   res.status(200).json({ message: 'Ticket picked up successfully', ticket: updatedTicket });
+  // } catch (error) {
+  //   res.status(500).json({ error: 'An error occurred while picking up the ticket' });
+   };
 
 // Pick down a ticket by ID
 const pickDownTicket = async (req, res) => {
+
 
   try{
     const ticket = await Ticket.findByIdAndUpdate(req.params.id, { "Assign_to": null });  
@@ -196,8 +214,19 @@ const pickDownTicket = async (req, res) => {
 
 // Delete a ticket by ID
 const deleteTicket = async (req, res) => {
-  //todo
-};
+  try {
+    const { id } = req.params;
+
+    const deleteTicket = await Ticket.findOneAndRemove({ _id: id });
+
+    if (!deleteTicket) {
+        return res.status(404).json({ message: 'Ticket not found' });
+    }
+
+    res.json({ message: 'Ticket deleted successfully' });
+} catch (error) {
+    res.status(500).json({ error: error.message });
+}};
 
 // Get a list of all tickets
 const readTickets = async (req, res) => {
@@ -211,7 +240,7 @@ const readTickets = async (req, res) => {
 
 // Get a ticket by ID
 const readTicketById = async (req, res) => {
-  const id = req.params;
+  const id = req.params.id;
 
   try {
     const ticket = await Ticket.findById(id);
