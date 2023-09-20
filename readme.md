@@ -28,7 +28,7 @@ This project aims to streamline the ticketing process, making it more efficient 
 
 ## Team Members
 
-- **Zaid Z Aldissi** - Project Manager and Lead Developer
+- **Zaid** - Project Manager and Lead Developer
   - Responsible for project planning and overseeing development.
 - **Osama** - Backend Developer
   - Develops server-side logic and API endpoints.
@@ -36,10 +36,18 @@ This project aims to streamline the ticketing process, making it more efficient 
   - Develops server-side logic and API endpoints.
 - **Naseem** - Backend Developer
   - Develops server-side logic and API endpoints.
-- **Israa** - Documentation Specialist
-  - Creates comprehensive documentation for the project.
-  - Maintains user guides, API documentation, and technical documentation.
-  - Ensures that all project-related information is well-documented and accessible to the team and users.
+- **Samer** - Backend Developer
+  - Develops server-side logic and API endpoints.
+- **Nawal** - QA Specialist
+  - Ensures product quality through testing.
+  - Develops and runs tests.
+  - Reports and helps fix issues.
+  - Works with the team to improve quality.
+- **Israa** - Scrum Master
+  - Facilitates Scrum meetings and teamwork.
+  - Helps the team remove obstacles.
+  - Encourages effective communication.
+  - Focuses on continuous improvement.
 
 ## Installation
 
